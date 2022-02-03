@@ -2,6 +2,10 @@ package devices;
 
 import actors.Human;
 import general.Salleable;
+
+import java.util.AbstractList;
+import java.util.ArrayList;
+
 //Zad 2
 public abstract class Car extends Device implements Salleable
 {
@@ -18,20 +22,35 @@ public abstract class Car extends Device implements Salleable
 
     @Override
     public void sale(Human seller, Human buyer, Double price) {
-        if (seller.getMyCar() == null) {
+        if (seller.getMyCar(1) == null)
+        {
             System.out.println("The seller has nothing to sell. ");
-        } else if (buyer.cash < price) {
+        }
+
+        else if (buyer.cash < price)
+        {
             System.out.println("Not enough money. ");
-        } else if (!seller.getMyCar().equals(this)) {
+        }
+
+        else if (!seller.getMyCar(1).equals(this))
+
+        {
             System.out.println("Not that model.");
-        } else {
-            seller.myCar = null;
-            buyer.myCar = this;
+        }
+
+        else if (!buyer.ParkingNotFull())
+        {
+            System.out.println("There is no space");
+        }
+
+        else {
+            seller.RemoveTheCar(this);
+            buyer.AddCar(this);
             seller.cash += price;
             buyer.cash -= price;
 
-
-            System.out.println("Bought " + this + " !");
+            System.out.println("Bought " + this);
+            OwnersOfCar.add(buyer.name);
         }
     }
 
@@ -81,6 +100,21 @@ public abstract class Car extends Device implements Salleable
                 howManyDoors + ", " +
                 yearOfProduce + ", " +
                 value + ".";
+    }
+
+    public ArrayList<String> OwnersOfCar = new ArrayList<String>();
+
+    public void FirstOwner() {
+        if (OwnersOfCar.size() == 0) {
+            System.out.println("Are u first owner");
+        } else {
+            System.out.println("Last car owners: " + OwnersOfCar);
+        }
+    }
+
+
+    public void QuantityOwners() {
+        System.out.println("Quantity owners: " + OwnersOfCar.size());
     }
 
 }

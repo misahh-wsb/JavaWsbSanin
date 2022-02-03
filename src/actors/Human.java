@@ -4,20 +4,35 @@ import creatures.Animal;
 import devices.Car;
 import devices.Phone;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Scanner;
 
 public class Human extends Animal {
-    public Double cash;
-    public Phone phone;
-    public Animal pet;
     public String firstName;
     public String lastName;
-    public Integer age;
-    public Car myCar;
-
     private Double salary;
+    public Animal pet;
+    public Integer age;
+    public Double cash;
+    public Phone phone;
+
+    private static final int Garage_Size = 4;
+    public Car[] garage = new Car[4];
+
+    public Human() {
+        super("wise man");
+        this.salary = 1200.0;
+        this.garage = new Car[Garage_Size];
+    }
+
+    public Human(Integer garageSize) {
+        super("homo sapiens");
+        this.salary = 2000.0;
+        this.garage = new Car[garageSize];
+    }
 
 
-    //Zad 3 and 4
     public void setSalary(Double salary) {
         if (salary < 0) {
             System.out.println("Mistake! Negative salary!");
@@ -36,7 +51,6 @@ public class Human extends Animal {
         }
     }
 
-    //Zad 3 and 4
     public Double getSalary() {
         LocalDate localdate = LocalDate.now();
 
@@ -44,25 +58,20 @@ public class Human extends Animal {
         return this.salary;
     }
 
-    public Human() {
-        super("wise man");
-
-        this.salary = 2000.0;
-
-    }
-
     //Zad 5
-    public void setMyCar(Car myCar)
+    public void setMyCar(Car myCar, Integer parkingLotNumber)
     {
         if (myCar.value < salary)
         {
             System.out.println("Udało się kupić samochód za gotówkę");
-            this.myCar = myCar;
+            Scanner location = new Scanner(System.in);
+            this.garage[parkingLotNumber] = myCar;
         }
         else if (myCar.value / 12 < salary)
         {
             System.out.println("Udało się kupić samochód na kredyt!");
-            this.myCar = myCar;
+            Scanner location = new Scanner(System.in);
+            this.garage[parkingLotNumber] = myCar;
         }
         else
         {
@@ -77,7 +86,12 @@ public class Human extends Animal {
                 lastName + ", " +
                 salary + ", " +
                 age + ", " +
-                pet + getMyCar();
+                pet + Arrays.toString(garage);
+    }
+
+    public Car getMyCar(Integer parkingLotNumber)
+    {
+        return this.garage[parkingLotNumber];
     }
 
 
@@ -87,19 +101,64 @@ public class Human extends Animal {
 
     @Override
     public void feed() {
-        System.out.println("fedded");
+        System.out.println("Fedded");
     }
 
     public void feed(Double foodWeight) {
         System.out.println("Weight after eating: " + foodWeight + "kg");
     }
 
-    //Zad 5
-    public Car getMyCar()
-    {
-        return myCar;
+    public boolean hasCar(Car car) {
+        try {
+            for (int i = 0; i < this.garage.length; i++) {
+                if (this.garage[i] == car) {
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
+
+    public boolean ParkingNotFull() {
+        try {
+            for (int i = 0; i < this.garage.length; i++) {
+                if (this.garage[i] == null) {
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void RemoveTheCar(Car local_car) {
+        for (int i = 0; i < this.garage.length; i++) {
+            if (this.garage[i] == local_car) {
+                this.garage[i] = null;
+                break;
+            }
+        }
+    }
+
+    public void AddCar(Car local_car) {
+        for (int i = 0; i < this.garage.length; i++) {
+            if (this.garage[i] == null) {
+                this.garage[i] = local_car;
+                break;
+            }
+        }
+    }
+
+    public double AllCars() {
+        double value = 0;
+        for (int i = 0; i < this.garage.length; i++) {
+            value += getMyCar(i).value;
+        }
+        return value;
+    }
+
+
 }
-
-
-

@@ -48,7 +48,7 @@ public class Main {
         me.getSalary();
 
         //Zad 2
-        me.getMyCar();
+        me.getMyCar(1);
         Car myCar = new Car(
                 "BMW",
                 "E26",
@@ -68,7 +68,7 @@ public class Main {
 
         //Zad 5
         me.setSalary(10000.0);
-        me.setMyCar(myCar);
+        //me.setMyCar(myCar);
 
         Animal testhuman = new Human();
         me.pet = testhuman;
@@ -116,8 +116,8 @@ public class Main {
         myPhone.sale(me, friend, 4000.0);
 
         myCar.sale(me, friend, 15000.0);
-        System.out.println("My car: " + me.myCar);
-        System.out.println("Friend's car " + friend.myCar);
+        //System.out.println("My car: " + me.myCar);
+        //System.out.println("Friend's car " + friend.myCar);
 
 
 
@@ -132,17 +132,48 @@ public class Main {
         eCar.refuel();
         dCar.refuel();
         lpgCar.refuel();
+        me.AddCar(eCar);
+        me.AddCar(dCar);
+        me.AddCar(lpgCar);
+        me.AddCar(myCar);
+        me.AddCar(myCar3);
+        System.out.println(me.AllCars());
+        me.RemoveTheCar(myCar3);
 
         FarmAnimal goat = new FarmAnimal("cattle");
         goat.feed(2.0);
         goat.feed();
         goat.beEaten();
 
-        myPhone.AppInstall("WSB-News");
-        myPhone.AppInstall("WSB-News", "1.0");
-        myPhone.AppInstall("WSB-News", "1.0", "192.169.1.1");
+        Application WsbNews = new Application("WSB-News", 2.0, 0.0);
+        Application WsbPay = new Application("WSB-Pay", 3.0, 0.0);
+        Application WsbBooks = new Application("WSB-Books", 6.0,30.0);
 
+        myPhone.NewAppInstall(WsbPay,me);
+        myPhone.isInstalled(WsbPay);
 
+        myPhone.isInstalled(WsbNews);
+        myPhone.NewAppInstall(WsbNews,me);
 
+        myPhone.NewAppInstall(WsbBooks,me);
+        myPhone.AmountInstalledApps();
+        System.out.println(myPhone.AppsCollection);
+
+        myPhone.NameSort();
+        myPhone.PriceSort();
+        myPhone.AllFreeApps();
+
+        Car RareCar = new Car("Oldsmobile", "F-88", 2, 1954, 12000000.00) {
+            public void refuel() {
+                System.out.println("93 gasoline");
+            }
+        };
+        me.AddCar(RareCar);
+        RareCar.OwnersOfCar.add("Mykhailo");
+        RareCar.sale(me, friend, 1000.00);
+        System.out.println("Owners: " + RareCar.OwnersOfCar);
+        System.out.println(RareCar.OwnersOfCar.size());
+        RareCar.FirstOwner();
+        RareCar.QuantityOwners();
         }
     }
