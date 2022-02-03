@@ -1,23 +1,40 @@
 package devices;
 
+import actors.Human;
+import general.Salleable;
 //Zad 2
-public class Car
+public abstract class Car extends Device implements Salleable
 {
-    public Integer yearOfProduce;
     public Integer howManyDoors;
-    public Double value;
-    public String model;
-    public String producer;
+    public Integer yearOfProduce;
 
-    //Zad 5
     public Car(String producer, String model, Integer howManyDoors, Integer yearOfProduce, Double value)
     {
-        this.yearOfProduce = yearOfProduce;
-        this.howManyDoors = howManyDoors;
+        super(producer, model, yearOfProduce, value);
         this.value = value;
-        this.model = model;
-        this.producer = producer;
+        this.howManyDoors = howManyDoors;
+        this.yearOfProduce = yearOfProduce;
     }
+
+    @Override
+    public void sale(Human seller, Human buyer, Double price) {
+        if (seller.getMyCar() == null) {
+            System.out.println("The seller has nothing to sell. ");
+        } else if (buyer.cash < price) {
+            System.out.println("Not enough money. ");
+        } else if (!seller.getMyCar().equals(this)) {
+            System.out.println("Not that model.");
+        } else {
+            seller.myCar = null;
+            buyer.myCar = this;
+            seller.cash += price;
+            buyer.cash -= price;
+
+
+            System.out.println("Bought " + this + " !");
+        }
+    }
+
 
     //Zad 6
     @Override
@@ -49,6 +66,15 @@ public class Car
     }
 
 
+
+
+    @Override
+    public void turnOn() {
+        System.out.println("I start the car");
+    }
+
+    abstract public void refuel();
+
     public String toString(){
         return  producer + ", " +
                 model + ", " +
@@ -56,4 +82,5 @@ public class Car
                 yearOfProduce + ", " +
                 value + ".";
     }
+
 }

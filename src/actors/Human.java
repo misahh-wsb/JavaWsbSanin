@@ -1,15 +1,21 @@
 package actors;
 
+import creatures.Animal;
 import devices.Car;
+import devices.Phone;
 import java.time.LocalDate;
 
-public class Human {
+public class Human extends Animal {
+    public Double cash;
+    public Phone phone;
+    public Animal pet;
     public String firstName;
     public String lastName;
     public Integer age;
+    public Car myCar;
+
     private Double salary;
-    public Animal pet;
-    private Car myCar;
+
 
     //Zad 3 and 4
     public void setSalary(Double salary) {
@@ -33,12 +39,16 @@ public class Human {
     //Zad 3 and 4
     public Double getSalary() {
         LocalDate localdate = LocalDate.now();
+
         System.out.println(localdate+ " - Wynagrodzenie: " + this.salary);
         return this.salary;
     }
 
     public Human() {
+        super("wise man");
+
         this.salary = 2000.0;
+
     }
 
     //Zad 5
@@ -56,7 +66,7 @@ public class Human {
         }
         else
         {
-            System.out.println("zapisz się na studia i znajdź nową robotę albo idź po podwyżkę");
+            System.out.println("Zapisz się na studia i znajdź nową robotę albo idź po podwyżkę");
         }
     }
 
@@ -65,9 +75,23 @@ public class Human {
     {
         return  firstName + ", " +
                 lastName + ", " +
-                age + ", " +
                 salary + ", " +
+                age + ", " +
                 pet + getMyCar();
+    }
+
+
+    public void sale(Human seller, Human buyer, Double price) {
+        System.out.println("It's illegal!!");
+    }
+
+    @Override
+    public void feed() {
+        System.out.println("fedded");
+    }
+
+    public void feed(Double foodWeight) {
+        System.out.println("Weight after eating: " + foodWeight + "kg");
     }
 
     //Zad 5

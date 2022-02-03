@@ -1,6 +1,9 @@
-package actors;
+package creatures;
 
-public class Animal {
+import actors.Human;
+import general.Salleable;
+
+public class Animal implements Salleable{
 
     public String name;
     public Integer age;
@@ -103,6 +106,34 @@ public class Animal {
     }
 
 
+    @Override
+    public void sale(Human seller, Human buyer, Double price) {
+        if (!seller.pet.equals(this))
+        {
+            System.out.println("Not that type of animal.");
+        }
+        else if(this instanceof Human)
+        {
+            System.out.println("It's illegal to sell people!");
+        }
+        else if (seller.pet == null)
+        {
+            System.out.println("The seller has nothing to sell");
+        }
+        else if (buyer.cash < price)
+        {
+            System.out.println("Not enough money");
+        }
+        else
+        {
+            seller.pet = null;
+            buyer.pet = this;
+            seller.cash += price;
+            buyer.cash -= price;
+            System.out.println("Bought " + this + " !");
+        }
+    }
+
     //Zad 6
     public String toString()
     {
@@ -112,5 +143,7 @@ public class Animal {
                 age + ", " +
                 live + ". ";
     }
+
+
 
 }
